@@ -1,0 +1,23 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apache1
+  template:
+    metadata:
+      labels:
+        app: apache1
+    spec:
+      imagePullSecrets:
+        - name: sahil
+      containers:
+        - name: apache-container
+          image: 947557066309.dkr.ecr.ap-south-1.amazonaws.com/apache3:latest
+          ports:
+            - containerPort: 80
+
