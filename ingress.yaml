@@ -1,0 +1,69 @@
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: path-based-ingress
+  namespace: default
+  annotations:
+    alb.ingress.kubernetes.io/actions.fixed-response-hi: >
+      {
+        "Type": "fixed-response",
+        "FixedResponseConfig": {
+          "ContentType": "text/plain",
+          "StatusCode": "200",
+          "MessageBody": "Hello from sahil ALB"
+        }
+      }
+    alb.ingress.kubernetes.io/actions.fixed-response-bye: >
+      {
+        "Type": "fixed-response",
+        "FixedResponseConfig": {
+          "ContentType": "text/plain",
+          "StatusCode": "200",
+          "MessageBody": "byefromsahilALB"
+        }
+      }
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /hi
+            pathType: Prefix
+            backend:
+              service:
+                name: fixed-response-hi
+                port:
+                  name: use-annotation
+          - path: /bye
+            pathType: Prefix
+            backend:
+              service:
+                name: fixed-response-bye
+                port:
+                  name: use-annotation
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: default-nginx-service
+                port:
+                  number: 80
+          - path: /apache/
+            pathType: Prefix
+            backend:
+              service:
+                name: apache-service
+                port:
+                 number: 80
+          - path: /nginx/
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx4
+                port:
+                  number: 80
+
