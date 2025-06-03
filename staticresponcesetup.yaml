@@ -1,0 +1,46 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: static-response-ingress
+  namespace: default
+  annotations:
+    alb.ingress.kubernetes.io/actions.fixed-response-hi: >
+      {
+        "Type": "fixed-response",
+        "FixedResponseConfig": {
+          "ContentType": "text/plain",
+          "StatusCode": "200",
+          "MessageBody": "Hello from ALB - no backend needed!"
+        }
+      }
+    alb.ingress.kubernetes.io/actions.fixed-response-bye: >
+      {
+        "Type": "fixed-response",
+        "FixedResponseConfig": {
+          "ContentType": "text/plain",
+          "StatusCode": "200",
+          "MessageBody": "Goodbye from ALB - take care!"
+        }
+      }
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /hi
+            pathType: Prefix
+            backend:
+              service:
+                name: fixed-response-hi  # must match annotation key exactly
+                port:
+                  name: use-annotation
+          - path: /bye
+            pathType: Prefix
+            backend:
+              service:
+                name: fixed-response-bye  # must match annotation key exactly
+                port:
+                  name: use-annotation
