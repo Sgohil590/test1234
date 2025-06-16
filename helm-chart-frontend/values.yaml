@@ -1,0 +1,21 @@
+
+
+replicaCount: 1
+
+image: 
+  repository: 947557066309.dkr.ecr.ap-south-1.amazonaws.com/nextjs2
+  tag: latest
+  pullPolicy: Always
+
+
+imagePullSecrets:
+  - name: sahil1
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+  
+secretName: web-env-secret
+configmapName: web-env-config
+ 
+

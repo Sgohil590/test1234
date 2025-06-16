@@ -1,0 +1,29 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-frontend
+  namespace: frontend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+     matchLabels:
+       app: nextjs-frontend
+  template:
+     metadata:
+        labels:
+           app: nextjs-frontend
+     spec:
+        containers:
+           - name: nextjs-frontend
+             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+             ports:
+              - containerPort: {{ .Values.service.targetPort }}
+             envFrom:
+              - configMapRef:
+                  name: {{ .Values.configmapName }}
+              - secretRef:
+                  name: {{ .Values.secretName }}
+        imagePullSecrets:
+            - name: {{ index .Values.imagePullSecrets 0 }}         
+         
