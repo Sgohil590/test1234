@@ -1,0 +1,23 @@
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx4-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx4
+  template:
+    metadata:
+      labels:
+        app: nginx4
+    spec:
+      imagePullSecrets:
+        - name: sahil
+      containers:
+        - name: nginx4container
+          image: 947557066309.dkr.ecr.ap-south-1.amazonaws.com/nginx4:latest
+          ports:
+            - containerPort: 80
