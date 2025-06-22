@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy application source code
 COPY . .
 
-# Declare build arguments
+# Declare build arguments run with docker image build -t command just for remain write at this place do not add in file if use.
 REACT_APP_AXIOS_BASE_URL_DEV="https://nodejs.sahil.virals.studio/api"
 REACT_APP_AXIOS_BASE_URL_STAG="https://nodejs.sahil.virals.studio/api"
 REACT_APP_AUTHFLOW="password"
