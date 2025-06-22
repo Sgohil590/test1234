@@ -1,0 +1,22 @@
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: redis2
+   namespace: database
+spec:
+    selector:
+      matchLabels:
+         app: redis2
+    template:
+      metadata:
+        labels:
+          app: redis2
+      spec:
+       containers:
+       - name:  2redis
+         image: redis:7
+         ports:
+         - containerPort: 6379
+

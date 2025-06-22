@@ -1,0 +1,27 @@
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-admin
+  namespace: frontend 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-admin
+  template:
+    metadata:
+      labels:
+        app: react-admin
+    spec:
+      containers:
+        - name: react-admin
+          image: 339713105348.dkr.ecr.eu-central-1.amazonaws.com/react1:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: admin-env-config  
+      imagePullSecrets:
+        - name: sahil

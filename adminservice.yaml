@@ -1,0 +1,14 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-admin-service
+spec:
+  type: ClusterIP
+  selector:
+    app: react-admin
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+

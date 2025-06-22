@@ -1,0 +1,31 @@
+
+
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: serious-synth-ladybug
+  region: eu-central-1
+
+vpc:
+  id: vpc-0bbb541186756be5d
+  subnets:
+    public:
+      eu-central-1a:
+        id: subnet-0420168e871d83719
+      eu-central-1b:
+        id: subnet-0819810276b3f92b1
+      eu-central-1c:
+        id: subnet-0a13164c4113096b4
+  securityGroup: sg-0fd2f3d58d30a355a
+
+managedNodeGroups:
+  - name: serious-synth-nodes
+    instanceType: t3.medium
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 3
+    volumeSize: 20
+    iam:
+      instanceRoleARN: arn:aws:iam::339713105348:role/AmazonEKSNodeRole
+

@@ -1,0 +1,31 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-web
+  namespace: frontend
+  labels:
+    app: nextjs-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextjs-web
+  template:
+    metadata:
+      labels:
+        app: nextjs-web
+    spec:
+      containers:
+        - name: nextjs-web
+          image: 339713105348.dkr.ecr.eu-central-1.amazonaws.com/2nextjs:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: web-env-configmap
+            - secretRef:
+                name: web.env.sercret
+      imagePullSecrets:
+        - name: sahil
+
